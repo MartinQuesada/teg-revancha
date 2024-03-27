@@ -27,17 +27,19 @@ typedef enum {
 	CONTINENTE_OCEANIA,
 	CONTINENTE_EUROPA,
 	CONTINENTE_ASIA,
+	CONTINENTE_AMERICACENTRO,
 	CONTINENTE_LAST,
 } CONTINENTE, *PCONTINENTE;
 
 #define		CONT_CANT	CONTINENTE_LAST
 
-#define CONT_AMERICASUR_CANT	6
-#define CONT_AMERICANORTE_CANT	10
-#define CONT_AFRICA_CANT	6
-#define CONT_OCEANIA_CANT	4
-#define CONT_EUROPA_CANT	9
-#define CONT_ASIA_CANT		15
+#define CONT_AMERICASUR_CANT    8
+#define CONT_AMERICANORTE_CANT  12
+#define CONT_AFRICA_CANT        8
+#define CONT_OCEANIA_CANT       6
+#define CONT_EUROPA_CANT        16
+#define CONT_ASIA_CANT          16
+#define CONT_AMERICACENTRO_CANT         6
 
 typedef struct _cont {
 	char const *name;		/**< name del continenete */

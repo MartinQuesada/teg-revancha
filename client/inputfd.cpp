@@ -1003,7 +1003,7 @@ TEG_STATUS clitok_tarjeta(char *str)
 	if(used) {
 		tarjeta_usar(&g_countries[ country ].tarjeta);
 		textmsg(M_IMP,
-		        _("You received card: '%s' and 2 armies where placed there"),
+		        _("You received card: '%s' and 3 armies where placed there"),
 		        countries_get_name(country));
 	} else {
 		textmsg(M_IMP, _("You received card: '%s'"),

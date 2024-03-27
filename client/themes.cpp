@@ -215,7 +215,9 @@ static pCards parseCards(xmlDocPtr doc, xmlNodePtr cur)
 				fprintf(stderr, "Card has no type\n");
 			}
 
-			if(strcmp((char*)type, "jocker") == 0) {
+			if(strcmp((char*)type, "super") == 0) {
+				ret->jocker = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+			} else if(strcmp((char*)type, "jocker") == 0) {
 				ret->jocker = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 			} else if(strcmp((char*)type, "balloon") == 0) {
 				ret->balloon= xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
@@ -634,6 +636,7 @@ TEG_STATUS theme_giveme_cards(pTCards pC)
 	pC->balloon= (char*)g_theme->cards->balloon;
 	pC->ship= (char*)g_theme->cards->ship;
 	pC->cannon= (char*)g_theme->cards->cannon;
+	pC->super= (char*)g_theme->cards->super;
 	pC->pos_y = atoi((char*)g_theme->cards->pos_y);
 
 	return TEG_STATUS_SUCCESS;

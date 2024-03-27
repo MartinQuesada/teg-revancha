@@ -66,6 +66,7 @@ struct {
 	{ NULL,	TARJ_GALEON,	"tar_galeon.png" },
 	{ NULL,	TARJ_GLOBO,	"tar_globo.png" },
 	{ NULL,	TARJ_COMODIN,	"tar_comodin.png" },
+	{ NULL,	TARJ_SUPERTARJETA,	"tar_supercard.png" },
 };
 #define NRTARJS	( sizeof(tarjs) / sizeof(tarjs[0]))
 
@@ -89,6 +90,9 @@ TEG_STATUS cards_load()
 		}
 		if(cards.jocker) {
 			tarjs[3].filename = cards.jocker;
+		}
+		if(cards.super) {
+			tarjs[4].filename = cards.super;
 		}
 	}
 
@@ -137,6 +141,7 @@ static int cuantos_selected(int countries[maximum_country_cards])
 static void cards_cb_button_canje(GtkDialog *dialog, gint id, gpointer data)
 {
 	int sel;
+	int i;
 	int countries[maximum_country_cards];
 
 	assert(dialog);
@@ -144,9 +149,13 @@ static void cards_cb_button_canje(GtkDialog *dialog, gint id, gpointer data)
 	if(id == 0) {
 		sel = cuantos_selected(countries);
 		if(sel != 3) {
-			textmsg(M_ERR, "Error, you must select 3 cards and "
-			        "not %d.", sel);
-			return;
+		//	textmsg(M_ERR, "Error, you must select 3 cards and not %d.", sel);
+			for( i=sel-1;i<3;i++ )
+			{
+				countries[i] = -1;
+			}
+		
+			//return;
 		}
 		canje_out(countries[0], countries[1], countries[2]);
 	}
@@ -274,7 +283,7 @@ static GtkWidget *cards_create(PTARJETA pT, int tarjs_index)
 	gtk_widget_show(canvas);
 
 	/* botones */
-	button_armies = gtk_button_new_with_label(_("Put 2 armies"));
+	button_armies = gtk_button_new_with_label(_("Put 3 armies"));
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button_armies),
 	                   TRUE, TRUE, 0);
 	g_signal_connect(G_OBJECT(button_armies), "clicked",
@@ -481,13 +490,14 @@ void cards_update(void)
 
 	for(i=0; i<maximum_country_cards; i++) {
 		if(tarjs_sensi[i].country != NULL) {
-			if(!ESTADO_ES(PLAYER_STATUS_TARJETA)
+			if(!ESTADO_ES(PLAYER_STATUS_TARJETA) 
 			        || tarjeta_es_usada(&tarjs_sensi[i].country->tarjeta)
-			        || tarjs_sensi[i].country->numjug != WHOAMI()) {
+			        || tarjs_sensi[i].country->numjug != WHOAMI() 
+				|| country_esbloqueado ( tarjs_sensi[i].country, WHOAMI() ) )
 				gtk_widget_set_sensitive(tarjs_sensi[i].button_armies, FALSE);
-			} else {
+			else 
 				gtk_widget_set_sensitive(tarjs_sensi[i].button_armies, TRUE);
-			}
+			
 		}
 	}
 }

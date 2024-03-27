@@ -69,9 +69,13 @@ TEG_STATUS fichas_add(PCOUNTRY p)
 			aConts[p->continente]++;
 			return TEG_STATUS_SUCCESS;
 		} else {
-			textmsg(M_ERR, _("Error, you cant put more than %d armies"), wanted_tot);
-			fichas_enter(p);
-			return TEG_STATUS_ERROR;
+                        if( country_esbloqueado( p, WHOAMI() )) {
+                                textmsg(M_ERR,_("%s está bloqueado. No se puede agregar ejércitos."),countries_get_name(p->id));
+                        } else {
+                                textmsg(M_ERR,_("Error, you cant put more than %d armies"),wanted_tot);
+                        }
+                        fichas_enter( p );
+                        return TEG_STATUS_ERROR;
 		}
 	} else {
 		textmsg(M_ERR, _("Error, '%s' isnt one of your countries"), countries_get_name(p->id));

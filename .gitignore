@@ -61,3 +61,12 @@ install-sh
 missing
 test-driver
 teg.sublime-project
+*.bak
+tegserver
+tegrobot
+tegclient
+config.*
+*.swp
+libtool
+docs/
+.dirstamp

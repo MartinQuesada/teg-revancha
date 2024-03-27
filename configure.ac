@@ -1,7 +1,7 @@
 dnl configure.ac for teg
-AC_PREREQ([2.53])
+AC_PREREQ([2.71])
 
-AC_INIT([Tenes Empanadas Graciela], [0.13.0], [teg-list@lists.sourceforge.net], [teg])
+AC_INIT([Tenes Empanadas Graciela],[0.13.0],[teg-list@lists.sourceforge.net],[teg])
 AM_INIT_AUTOMAKE(subdir-objects)
 AC_CONFIG_SRCDIR([.astylerc])
 AC_CONFIG_MACRO_DIR([macros])
@@ -12,7 +12,7 @@ AM_MAINTAINER_MODE
 AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_CXX
-AC_PROG_LIBTOOL
+LT_INIT
 AC_PROG_LN_S
 
 AX_CXX_COMPILE_STDCXX(17, [ext])
@@ -145,20 +145,53 @@ AC_CHECK_LIB(c, inet_ntop, [], [AC_MSG_ERROR("Can't find the required inet_ntop 
 
 AC_CHECK_LIB(nls,main)
 
-dnl Checks for header files.
-AC_HEADER_STDC
-AC_CHECK_HEADERS(arpa/inet.h netdb.h netinet/in.h pwd.h sys/ioctl.h \
-                 sys/select.h sys/signal.h sys/socket.h sys/termio.h \
-		 sys/time.h sys/types.h sys/uio.h termios.h unistd.h)
+#dnl Checks for header files.
+#m4_warn([obsolete],
+#[The preprocessor macro 'STDC_HEADERS' is obsolete.
+#  Except in unusual embedded environments, you can safely include all
+#  C89 headers unconditionally.])dnl
+## Autoupdate added the next two lines to ensure that your configure
+## script's behavior did not change.  They are probably safe to remove.
+#AC_CHECK_INCLUDES_DEFAULT
+#AC_PROG_EGREP
+#
+#AC_CHECK_HEADERS(arpa/inet.h netdb.h netinet/in.h pwd.h sys/ioctl.h \
+#                 sys/select.h sys/signal.h sys/socket.h sys/termio.h \
+#		 sys/time.h sys/types.h sys/uio.h termios.h unistd.h)
+#
+#
+#dnl Checks for typedefs, structures, and compiler characteristics.
+#AC_C_CONST
+#m4_warn([obsolete],
+#[Update your code to rely only on HAVE_SYS_TIME_H,
+#then remove this warning and the obsolete code below it.
+#All current systems provide time.h; it need not be checked for.
+#Not all systems provide sys/time.h, but those that do, all allow
+#you to include it and time.h simultaneously.])dnl
+#AC_CHECK_HEADERS_ONCE([sys/time.h])
+## Obsolete code to be removed.
+#if test $ac_cv_header_sys_time_h = yes; then
+#  AC_DEFINE([TIME_WITH_SYS_TIME],[1],[Define to 1 if you can safely include both <sys/time.h>
+#	     and <time.h>.  This macro is obsolete.])
+#fi
+## End of obsolete code.
+#
+#AC_STRUCT_TM
+#
+#dnl Checks for library functions.
+#m4_warn([obsolete],
+#[your code may safely assume C89 semantics that RETSIGTYPE is void.
+#Remove this warning and the 'AC_CACHE_CHECK' when you adjust the code.])dnl
+#AC_CACHE_CHECK([return type of signal handlers],[ac_cv_type_signal],[AC_COMPILE_IFELSE(
+#[AC_LANG_PROGRAM([#include <sys/types.h>
+##include <signal.h>
+#],
+#		 [return *(signal (0, 0)) (0) == 1;])],
+#		   [ac_cv_type_signal=int],
+#		   [ac_cv_type_signal=void])])
+AC_DEFINE_UNQUOTED([RETSIGTYPE],[$ac_cv_type_signal],[Define as the return type of signal handlers
+		    ('int' or 'void').])
 
-
-dnl Checks for typedefs, structures, and compiler characteristics.
-AC_C_CONST
-AC_HEADER_TIME
-AC_STRUCT_TM
-
-dnl Checks for library functions.
-AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(fdopen gethostname getpwuid gettimeofday select \
                strerror strlcat strlcpy strstr usleep vsnprintf)
@@ -208,9 +241,9 @@ AC_CONFIG_FILES([
 	client/themes/sentimental/Makefile 
 	client/themes/draco/Makefile
 	docs/Makefile
-	docs/gnome-help/Makefile
-	docs/gnome-help/C/Makefile
-	docs/gnome-help/pl/Makefile
+	#docs/gnome-help/Makefile
+	#docs/gnome-help/C/Makefile
+	#docs/gnome-help/pl/Makefile
 	])
 AC_OUTPUT
 
@@ -220,4 +253,5 @@ echo ""
 echo "Are you ready for the Empanada Experience ?"
 echo "Type \`make'"
 echo ""
+
 

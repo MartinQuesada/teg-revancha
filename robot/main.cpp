@@ -94,7 +94,10 @@ int main(int argc, char **argv_var)
 	}
 
 	textmsg(M_IMP, _("Tenes Empanadas Graciela - Robot v%s - by Ricardo Quesada\n"), VERSION);
-	textmsg(M_IMP, _("Robot intelligence: %d%%"), 62);
+	//textmsg(M_IMP, _("Robot intelligence: %d%%"), 62);
+
+	int robot_aggressiveness = rand() % 100;
+        textmsg(M_IMP,_("Robot aggresiveness: %d%%"),robot_aggressiveness);
 
 	teg::client::callbacks::gui_init(argc, argv_var);
 

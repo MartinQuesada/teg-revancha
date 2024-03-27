@@ -1,4 +1,4 @@
-pixmapdir=$(datadir)/teg/themes/draco
+pixmapdir=$(datadir)/pixmaps/teg_pix/themes/draco
 
 pixmap_DATA =	\
 	teg_theme.xml		\

@@ -34,6 +34,8 @@
 #include "ai.h"
 #include "ai_fichas.h"
 
+#include "country.h"
+
 namespace teg::robot
 {
 
@@ -130,6 +132,17 @@ TEG_STATUS ai_fichas_calc_puntaje_conquer(int country)
 		if(ple == 0) {
 			ai_puntaje[country] -= 50;
 		}
+
+                /* Si el país está bloqueado no puedo poner fichas */
+                if( country_esbloqueado( &g_countries[country],c::WHOAMI() ) )
+                {
+                        ai_puntaje[country] -= 1000;
+                }
+
+                // Verifico si está en mi objetivo
+                if( country_inmission( &g_countries[country],c::WHOAMI() ) == true ){
+                        ai_puntaje[country] += 10;
+                }
 	}
 	return TEG_STATUS_SUCCESS;
 }
@@ -247,6 +260,11 @@ TEG_STATUS ai_fichas_calc_puntaje(int p)
 	ai_fichas_calc_puntaje_conquer(p);
 	ai_fichas_calc_puntaje_fichas(p);
 	ai_fichas_calc_puntaje_defense(p);
+
+        /* Agregado para debbuging */
+        int i;
+        for(i=0;i< COUNTRIES_CANT;i++)
+                if (g_countries[i].numjug ==c::WHOAMI() )
 
 	return TEG_STATUS_SUCCESS;
 }

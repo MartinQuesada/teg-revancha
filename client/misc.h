@@ -21,6 +21,7 @@
 #pragma once
 
 #include "../common/common.h"
+#include "globals.h"
 
 namespace teg::client
 {

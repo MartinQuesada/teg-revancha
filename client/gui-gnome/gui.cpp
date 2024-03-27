@@ -392,7 +392,11 @@ TEG_STATUS gui_fichas(int cant, int conts)
 			buf2[ sizeof(buf2) -1 ] = 0;
 			strcat(buf, buf2);
 		} else {
-			snprintf(buf2, sizeof(buf2)-1, _("Place %d armies in your countries\n"), cant);
+			if( cant > 0 ) {
+				snprintf(buf2,sizeof(buf2)-1,_("Place %d armies in your countries\n"),cant);
+			} else {
+				snprintf(buf2,sizeof(buf2)-1,_("All countries blocked. You can't put armies.\n"));
+			}
 			buf2[ sizeof(buf2) -1 ] = 0;
 			strcat(buf, buf2);
 		}

@@ -22,6 +22,7 @@
 		<country name="Colombia" file="colombia.png" pos_x="0" pos_y="0" army_x="0" army_y="0"></country>
 		<country name="Peru" file="peru.png" pos_x="1" pos_y="36" army_x="0" army_y="0"></country>
 		<country name="Uruguay" file="uruguay.png" pos_x="51" pos_y="54" army_x="0" army_y="10"></country>
+		<country name="Malvinas" file="malvinas.png" pos_x="60" pos_y="135" army_x="0" army_y="10"></country>
 	</continent>
 	<continent name="North America" pos_x="10" pos_y="0">
 		<country name="Mexico" file="mexico.png" pos_x="122" pos_y="168" army_x="0" army_y="10"></country>

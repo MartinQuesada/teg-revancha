@@ -39,11 +39,15 @@ TEG_STATUS ejer2_out(int country)
 				net_printf(g_game.fd, TOKEN_EJER2"=%d\n", country);
 				return TEG_STATUS_SUCCESS;
 			} else {
-				textmsg(M_ERR, _("Error, the 2 armies where placed before"));
-				return TEG_STATUS_ERROR;
+                                if( country_esbloqueado( &g_countries[ country ], WHOAMI() ) ) {
+                                        textmsg( M_ERR,_("Error, el pais está bloqueado. No puede poner ejércitos"));
+                                } else {
+                                        textmsg( M_ERR,_("Error, the 3 armies where placed before"));
+                                }
+                                return TEG_STATUS_ERROR;
 			}
 		} else {
-			textmsg(M_ERR, _("Error, it's not the time to put 2 armies."));
+			textmsg(M_ERR, _("Error, it's not the time to put 3 armies."));
 			return TEG_STATUS_ERROR;
 		}
 	} else {

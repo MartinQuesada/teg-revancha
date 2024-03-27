@@ -26,7 +26,7 @@
 #include "cont.h"
 
 constexpr std::size_t COUNTRYNAME_MAX_LEN{50};
-constexpr std::size_t COUNTRIES_CANT{50};
+constexpr std::size_t COUNTRIES_CANT{72};
 
 enum CountrySelectionStatusDetail: unsigned {
 	COUNTRY_SELECT_NONE = 0,
@@ -44,7 +44,7 @@ using CountrySelectionStatus = std::underlying_type<CountrySelectionStatusDetail
 
 struct COUNTRY {
 	COUNTRY();
-	COUNTRY(CountryId id, char const* name, CONTINENTE continente, TARJTIPO kindOfCard);
+	COUNTRY(CountryId id, char const* name, CONTINENTE continente, TARJTIPO kindOfCard, bool esisla);
 
 	CountryId id;					/**< numero de country */
 	char const *name;				/**< name del country*/
@@ -53,6 +53,7 @@ struct COUNTRY {
 	int ejer_reagrupe=0;			/**< cant de ejercitos pasados en reagru */
 	CONTINENTE continente;			/**< continente al que pertenece */
 	TARJETA tarjeta;			/**< tipo de dibujo de tarjeta */
+	bool esisla;				/** define si es isla o no */
 	CountrySelectionStatus selected = COUNTRY_SELECT_NONE;	/**< util para la gui. Dice si esta seleccionado */
 };
 using PCOUNTRY=COUNTRY*;
@@ -64,9 +65,11 @@ using PCOUNTRY=COUNTRY*;
 extern COUNTRY g_countries[];
 
 bool countries_eslimitrofe(int a, int b);
+int countries_cantlimitrofes( int p );
 void countries_initcountry(PCOUNTRY p);
 void countries_init();
 bool country_libre(int i);
+bool country_esbloqueado ( PCOUNTRY p, int j );
 
 /// \brief decides if the country number is valid.
 bool countrynumber_is_valid(int country_number);

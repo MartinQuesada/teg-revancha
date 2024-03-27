@@ -30,6 +30,7 @@
 #include <unistd.h>
 
 #include "client.h"
+#include "../server/server.h"
 #include "ai.h"
 #include "ai_fichas.h"
 
@@ -37,6 +38,7 @@ namespace teg::robot
 {
 
 namespace c = ::teg::client;
+namespace s = ::teg::server;
 
 /**
  * Risk of buffer overflow: When cards are traded for armies, there is NO upper
@@ -240,6 +242,45 @@ int ai_puntaje_atacar_country(int src, int dst)
 	return p;
 }
 
+/* Recibe un país y un número de jugador y devuelve verdadero si ese país es parte del objetivo del jugador  */
+bool country_inmission( PCOUNTRY pP, int numjug )
+{
+        //PCPLAYER pJ;
+        teg::client::PCPLAYER pJ_enemigo;
+
+        // player_whois(numjug, &pJ);
+        player_whois(pP->numjug, &pJ_enemigo);
+
+        //for (i=0; i<missions_cant(); i++)
+        //{
+                fprintf(stderr, ("Pais(Jug): %s(%i), Col-Enemigo: %i, Obj-dest: %i, Obj-cont: %i\n"), pP->name,pP->numjug,pJ_enemigo->color,g_missions[c::g_game.secret_mission].jugadores[pJ_enemigo->color], g_missions[c::g_game.secret_mission].continents[pP->continente]);
+                //fprintf(stderr, _("Numjug: %i , Pais: %s, Obj: %i\nObj-name: %s"), numjug, pP->name,c::g_game.secret_mission, g_missions[c::g_game.secret_mission].name);
+
+                // Misión común o conquistar el mundo
+                if (c::g_game.secret_mission == MISSION_COMMON || c::g_game.secret_mission == MISSION_CONQWORLD)
+                        return true;
+
+                // Objetivo de cant. de países
+                if (g_missions[c::g_game.secret_mission].tot_countries != 0)
+                        return true;
+
+                // Misión de destrucción
+                if (g_missions[c::g_game.secret_mission].jugadores[pJ_enemigo->color] == pJ_enemigo->color)
+                        return true;
+
+                // Por continente
+                if (g_missions[c::g_game.secret_mission].continents[pP->continente] > 0)
+                        return true;
+
+                // Por islas
+                /*if (g_missions[i].numjug == numjug && g_missions[i].limitrofes > 0 && pP->isIsla == 1)
+                        return true; */
+
+        //}
+
+        return false;
+}
+
 /**
  * @fn int ai_puntaje_attack( int p )
  * Evalua los puntos que tiene el country para atacar
@@ -258,6 +299,16 @@ TEG_STATUS ai_puntaje_atacar(int country)
 
 			/* son negativos estos valores, por eso sumo */
 			p_tmp += ai_puntaje_atacar_warning(country);
+
+                        // Verifico si está en mi objetivo
+                        PCOUNTRY pP = &g_countries[country];
+                        if ( country_inmission( pP, c::WHOAMI() ) == true){
+                                p_tmp += 10;
+                                fprintf(stderr, ("País: %s, Jugador: %i. Puntaje +10.\n"),g_countries[i].name,c::WHOAMI() );
+                        }
+                        else {
+                                fprintf(stderr, ("País: %s, Jugador: %i. Puntaje nada.\n"),g_countries[i].name,c::WHOAMI() );
+                        }
 
 			if(p_tmp > p) {
 				p = p_tmp;

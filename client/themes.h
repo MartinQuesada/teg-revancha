@@ -73,6 +73,7 @@ typedef struct _tcontinent {
 
 /* cards */
 typedef struct _theme_cards {
+	xmlChar *super;		/**< the supercard figure */
 	xmlChar *jocker;	/**< the jocker figure */
 	xmlChar *balloon;	/**< the balloon ship */
 	xmlChar *cannon;	/**< the cannon ship */
@@ -81,6 +82,7 @@ typedef struct _theme_cards {
 } Cards, *pCards;
 
 typedef struct _tcards {
+	char	* super;
 	char	* jocker;
 	char	* balloon;
 	char	* cannon;

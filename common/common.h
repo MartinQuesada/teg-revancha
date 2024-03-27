@@ -143,6 +143,6 @@ int my_atoi(const char *s);
  * target buffer (unless \p destlen is 0). */
 void string_copy(char* dest, size_t destlen, char const* source);
 
-using ContinentNames = std::array<std::string, 6>;
+using ContinentNames = std::array<std::string, 7>;
 std::string replace_continents(std::string const& format,
                                ContinentNames const& country_names);

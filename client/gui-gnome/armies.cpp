@@ -48,6 +48,7 @@ static ARMIES_POS armies_prop[CONT_CANT+1] = {
 	{0, 0, NULL},
 	{0, 0, NULL},
 	{0, 0, NULL},
+	{0, 0, NULL},
 };
 
 static int initialized=0;
@@ -125,7 +126,7 @@ static TEG_STATUS armies_view_cant_x_cont(int i)
 	armies_prop[i].armies_text = goo_canvas_text_new(
 	                                 armies_group,
 	                                 buffer,
-	                                 (double) 100,
+	                                 (double) 115,
 	                                 (double) i*12+15,
 	                                 (double) -1,
 	                                 GOO_CANVAS_ANCHOR_NORTH_EAST,

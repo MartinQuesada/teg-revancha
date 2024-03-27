@@ -23,6 +23,7 @@
 #include <string>
 
 #include "cont.h"
+#include "common.h"
 
 typedef struct _missions {
 	/// The player number which this mission is assigned to
@@ -34,9 +35,10 @@ typedef struct _missions {
 	/// number of countries to conquer on each continent
 	int	continents[CONTINENTE_LAST];
 
-	/** number countries additionaly to own in neighboring continents in
-	 * addition to the counties in the continentes */
-	int	frontiering_countries;
+	int     jugadores[maximum_player_count+1];   /**< jugadores a eliminar */
+
+        /// Para la misión de conquistar 6 islas en 3 continentes distintos
+        int     islands;
 
 	/// total number of countries to conquer
 	int	tot_countries;

@@ -35,12 +35,14 @@ using CountryId = int;
 #define TARJETA_NULL_GALEON TARJ_GALEON
 #define TARJETA_NULL_CANION TARJ_CANION
 #define TARJETA_NULL_GLOBO TARJ_GLOBO
+#define TARJETA_NULL_SUPERTARJETA TARJ_SUPERTARJETA
 
 enum CardKind: unsigned {
 	TARJ_GALEON = 1,		/**< valor del galeon */
 	TARJ_CANION = 4,		/**< valor del canion */
 	TARJ_GLOBO = 8,			/**< valor del globo */
-	TARJ_COMODIN = 16,		/**< valor del comodin */
+	TARJ_COMODIN = 16,		/** valor del comodin */
+	TARJ_SUPERTARJETA = 32,		/** valor de la supertarjeta */
 };
 using TARJTIPO = std::underlying_type<CardKind>::type;
 
@@ -61,6 +63,7 @@ bool can_trade_cards(TARJTIPO a, TARJTIPO b, TARJTIPO c);
 bool tarjeta_puedocanje(int numjug, int t1, int t2, int t3);
 void tarjeta_init(void);
 void tarjeta_inittarj(PTARJETA t);
+void tarjeta_pilasdescarte( PTARJETA t );
 void tarjeta_poner(PTARJETA t);
 void tarjeta_sacar(PTARJETA t, int numjug);
 void tarjeta_usar(PTARJETA pT);

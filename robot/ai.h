@@ -58,4 +58,6 @@ TEG_STATUS ai_puntaje_sort(int cant);
 /// Reset the sorting mechanism
 void ai_puntaje_clean();
 
+/// Country in mission? Is a good idea to attack it?
+bool country_inmission( PCOUNTRY pP, int numjug );
 }

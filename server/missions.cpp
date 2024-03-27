@@ -64,7 +64,7 @@ TEG_STATUS mission_chequear(PSPLAYER pJ)
 	/* TODO: 3ra parte. Chequear si vencio a los otros playeres */
 
 	/* TODO: 4ta parte. Chequear si tiene los countries limitrofes que se piden */
-	if((i=g_missions[pJ->mission].frontiering_countries)) {
+	if((i=g_missions[pJ->mission].islands)) {
 		int j, k, i_tmp;
 		int salir=0;
 		for(j=0; j<COUNTRIES_CANT && salir==0; j++) {
